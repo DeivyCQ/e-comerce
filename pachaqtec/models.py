@@ -68,7 +68,6 @@ class Unidad_Estudio(models.Model):
         verbose_name = 'Unidad de Estudio'
         verbose_name_plural = 'Unidades de Estudio'
     
-
 class Sub_Unidad_Estudio(models.Model):
     id = models.AutoField(primary_key=True)
     unidad_estudio = models.ForeignKey(Unidad_Estudio, on_delete=models.CASCADE)
@@ -83,3 +82,4 @@ class Sub_Unidad_Estudio(models.Model):
     class Meta():
         verbose_name = 'Sub Unidad de Estudio'
         verbose_name_plural = 'Sub Unidades de Estudio'
+
