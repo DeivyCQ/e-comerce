@@ -1,8 +1,7 @@
-from django.conf.urls import url 
+from django.urls import path
 from pachaqtec import views 
  
 urlpatterns = [ 
-    url(r'^api/tipo_imagen$', views.tipo_imagen_list),
-    url(r'^api/tipo_imagen/(?P<pk>[0-9]+)$', views.tipo_imagen_detail),
-    url(r'^api/tipo_imagen/published$', views.tipo_imagen_list_published)
+    path('imagen/', views.Tipo_Imagen_List.as_view()),
+    path('imagen/<int:pk>/', views.Tipo_Imagen_Detail.as_view()),
 ]

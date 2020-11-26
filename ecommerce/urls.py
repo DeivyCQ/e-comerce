@@ -16,8 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
+#from django.views.generic import TemplateView
+#from rest_framework.schemas import get_schema_view
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='ecommerce')
 
 urlpatterns = [
-    url(r'^', include('pachaqtec.urls')),
+    path('pachaqtec/', include('pachaqtec.urls')),
     path('admin/', admin.site.urls),
+    url(r'^docs$', schema_view),
+    #path('docs/', TemplateView.as_view(
+    #    template_name='documentation.html',
+    #    extra_context={'schema_url':'openapi-schema'}
+    #), name='swagger-ui'),
+    #path('openapi/', get_schema_view(
+    #    title="School Service",
+    #    description="API developers hpoing to use our service"
+    #), name='openapi-schema'),
 ]
