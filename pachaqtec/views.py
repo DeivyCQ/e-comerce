@@ -18,9 +18,9 @@ class Producto_List(generics.ListCreateAPIView):
 
     def list(self, request):
         queryset = self.get_queryset()
-        # producto = serializers.serialize("json", queryset)
+        #producto = serializers.serialize("json", queryset)
         producto = queryset.values()
-        print(queryset.values())
+        #print(queryset.values())
         prod = []
         for p in producto:
             # print(p["nombre"])
@@ -29,11 +29,22 @@ class Producto_List(generics.ListCreateAPIView):
             print(imagen_producto.values()) 
             print(plan_estudio.values())
             prod.append({
+                "id" : "",
                 "nombre" : p["nombre"],
-                "alumno" : "nombrealumno",
-                "imagen" : imagen_producto.values(),
-                "planEstudio" : plan_estudio.values()
-            })
+                "img" : imagen_producto.values(),
+                "precio" : p["precio"],
+                "imgSlider" : "",
+                "frase" : "",
+                "descripcion" : p["descripcion"],
+                "inicioClases" : "",
+                "horario" : "",
+                "planEstudio" : plan_estudio.values(),
+                #"descripcion_corta" : p["descripcion_corta"],
+                #"descripcion_larga" : p["descripcion_larga"],
+                #"telefono" : p["telefono"],
+                #"orientado_a" : p["orientado_a"],
+                #"otorga" : p["otorga"]
+                })
         
         print(prod)
         serializer = ProductoSerializer(queryset, many=True)
