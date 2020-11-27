@@ -16,7 +16,7 @@ class Tipo_Imagen(models.Model):
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=80)
-    descripcion = models.TextField
+    descripcion = models.TextField()
     descripcion_corta = models.TextField()
     descripcion_larga = models.TextField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)

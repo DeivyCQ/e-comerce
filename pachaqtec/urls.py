@@ -1,5 +1,6 @@
 from django.urls import path
 from pachaqtec import views 
+from rest_framework.urlpatterns import format_suffix_patterns
  
 urlpatterns = [ 
     #tipo_imagen
@@ -21,3 +22,5 @@ urlpatterns = [
     path('subunidad/', views.Sub_Unidad_Estudio_List.as_view()),
     path('subunidad-<int:pk>/', views.Sub_Unidad_Estudio_Detail.as_view()),
 ]
+
+#urlpatterns = format_suffix_patterns(urlpatterns)
