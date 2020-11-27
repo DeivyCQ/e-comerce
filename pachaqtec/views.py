@@ -18,25 +18,29 @@ class Producto_List(generics.ListCreateAPIView):
 
     def list(self, request):
         queryset = self.get_queryset()
-        #producto = serializers.serialize("json", queryset)
         producto = queryset.values()
-        #print(queryset.values())
         prod = []
         for p in producto:
-            # print(p["nombre"])
+            img_principal = ""
+            img_slider = []
             imagen_producto = Imagen_Producto.objects.filter(producto=p["id"])
+            for ip in imagen_producto.values():
+                print(ip)
+                if ip["tipo_imagen_id"] == 1:
+                    img_principal = ip["nombre"]
+                if ip["tipo_imagen_id"] == 2:
+                    img_slider.append(ip["nombre"])
+
             plan_estudio = Plan_Estudio_Producto.objects.filter(producto_id=p["id"])
-            print(imagen_producto.values()) 
-            print(plan_estudio.values())
             prod.append({
                 "id" : "",
                 "nombre" : p["nombre"],
-                "img" : imagen_producto.values(),
+                "img" : img_principal,
                 "precio" : p["precio"],
-                "imgSlider" : "",
-                "frase" : "",
-                "descripcion" : p["descripcion"],
-                "inicioClases" : "",
+                "imgSlider" : img_slider,
+                "frase" : p["descripcion"],
+                "descripcion" : p["descripcion_corta"],
+                "inicioClases" : p["inicio_clases"],
                 "horario" : "",
                 "planEstudio" : plan_estudio.values(),
                 #"descripcion_corta" : p["descripcion_corta"],
@@ -46,7 +50,7 @@ class Producto_List(generics.ListCreateAPIView):
                 #"otorga" : p["otorga"]
                 })
         
-        print(prod)
+        # print(prod)
         serializer = ProductoSerializer(queryset, many=True)
         return Response(prod)
 

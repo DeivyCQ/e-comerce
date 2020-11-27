@@ -21,7 +21,9 @@ class ProductoSerializer(serializers.ModelSerializer):
         'precio',
         'telefono',
         'orientado_a',
-        'otorga')
+        'otorga',
+        'slug',
+        'inicio_clases')
 
 class Imagen_ProductoSerializer(serializers.ModelSerializer):
 
