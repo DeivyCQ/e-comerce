@@ -21,28 +21,57 @@ class Producto_List(generics.ListCreateAPIView):
         producto = queryset.values()
         prod = []
         for p in producto:
+            # Imágenes de curso.
             img_principal = ""
-            img_slider = []
+            img_slider = ""
             imagen_producto = Imagen_Producto.objects.filter(producto=p["id"])
             for ip in imagen_producto.values():
                 print(ip)
                 if ip["tipo_imagen_id"] == 1:
                     img_principal = ip["nombre"]
                 if ip["tipo_imagen_id"] == 2:
-                    img_slider.append(ip["nombre"])
-
+                    img_slider= ip["nombre"]
+            # Plan de estudio.
             plan_estudio = Plan_Estudio_Producto.objects.filter(producto_id=p["id"])
+
+            p["descripcion_corta"].replace("\r", "")
+
+            # JSON Estructura
             prod.append({
-                "id" : "",
+                "id" : p["id"],
                 "nombre" : p["nombre"],
                 "img" : img_principal,
                 "precio" : p["precio"],
+                "descuento": 20,
                 "imgSlider" : img_slider,
                 "frase" : p["descripcion"],
                 "descripcion" : p["descripcion_corta"],
                 "inicioClases" : p["inicio_clases"],
-                "horario" : "",
-                "planEstudio" : plan_estudio.values(),
+                "horario" : [
+                    {
+                        "frecuencia": "Lunes, martes, miércoles",
+                        "hora": "7:30 p.m a 9:30 p.m"
+                    },
+                    {
+                        "frecuencia": "Jueves (asesoría)",
+                        "hora": "7:30 p.m a 9:30 p.m"
+                    },
+                    {
+                        "frecuencia": "Sábados",
+                        "hora": "8:00 a.m a 2:00 p.m"
+                    }
+                ],
+                "planEstudio" : [
+                    {
+                        "titulo": "",
+                        "semanas": [
+                            {
+                                "titulo" : "",
+                                "Subtemas": ["",""]
+                            }
+                        ]
+                    }
+                ]
                 #"descripcion_corta" : p["descripcion_corta"],
                 #"descripcion_larga" : p["descripcion_larga"],
                 #"telefono" : p["telefono"],
