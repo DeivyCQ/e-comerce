@@ -8,7 +8,7 @@ urlpatterns = [
     path('imagen-<int:pk>/', views.Tipo_Imagen_Detail.as_view()),
     #producto
     path('producto/', views.Producto_List.as_view()),
-    path('producto-<int:pk>/', views.Producto_Detail.as_view()),
+    path('producto/<slug>/', views.Producto_Detail.as_view()),
     #imagen_producto
     path('imagenproducto/', views.Imagen_Producto_List.as_view()),
     path('imagenproducto-<int:pk>/', views.Imagen_Producto_Detail.as_view()),
