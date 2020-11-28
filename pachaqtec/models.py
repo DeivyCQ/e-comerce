@@ -27,7 +27,7 @@ class Producto(models.Model):
     inicio_clases = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.nombre} {self.descripcion} {self.descripcion_corta} {self.descripcion_larga} {self.precio} {self.telefono} {self.orientado_a} {self.otorga}'
+        return f'{self.nombre}'
 
     class Meta():
         verbose_name = 'Producto'

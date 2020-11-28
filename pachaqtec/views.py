@@ -3,6 +3,8 @@ from .models import Tipo_Imagen, Producto, Imagen_Producto, Plan_Estudio, Unidad
 from .serializers import Tipo_Imagen_Serializer, ProductoSerializer, Imagen_ProductoSerializer, Plan_EstudioSerializer, Unidad_EstudioSerializer, Sub_Unidad_EstudioSerializer
 from rest_framework.response import Response
 from django.core import serializers
+from django.http import HttpResponse, JsonResponse
+
 
 class Tipo_Imagen_List(generics.ListCreateAPIView):
     queryset = Tipo_Imagen.objects.all()
@@ -80,14 +82,43 @@ class Producto_List(generics.ListCreateAPIView):
                 })
         
         # print(prod)
-        serializer = ProductoSerializer(queryset, many=True)
+        #serializer = ProductoSerializer(queryset, many=True)
         return Response(prod)
+
+    #def get_serializer_class(self):
+    #    if self.request.producto.is_staff:
+    #        return FullAccountSerializer
+    #    return BasicAccountSerializer
 
 class Producto_Detail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
     lookup_field = "slug"
 
+    def get(self, request, *args, **kwargs):
+        producto = Producto.objects.get(slug=kwargs['slug'])
+        imagen_producto = Imagen_Producto.objects.filter(producto=producto).values()
+        plan_estudio = Plan_Estudio_Producto.objects.filter(producto_id=producto.id).values()
+        producto.imagen = imagen_producto
+        producto.plan_estudio = plan_estudio
+
+        response_json = {
+            'id': producto.id,
+            'nombre': producto.nombre,
+            'descripcion': producto.descripcion,
+            'descripcion_corta': producto.descripcion_corta,
+            'descripcion_larga': producto.descripcion_larga,
+            'precio': producto.precio,
+            'telefono': producto.telefono,
+            'orientado_a': producto.orientado_a,
+            'otorga': producto.otorga,
+            'slug': producto.slug,
+            'inicio': producto.inicio_clases,
+            'imagen': producto.imagen,
+            'plan_estudio': producto.plan_estudio
+        }
+
+        return Response(response_json)
 
 class Imagen_Producto_List(generics.ListCreateAPIView):
     queryset = Imagen_Producto.objects.all()
